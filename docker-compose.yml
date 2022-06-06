@@ -1,0 +1,22 @@
+version: "3"
+services:
+  mysql-standalone:
+    image: mysql:5.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=springstudent
+      - MYSQL_DATABASE=dish_directory
+      - MYSQL_USER=springstudent
+      - MYSQL_PASSWORD=springstudent
+    ports:
+      - 3306:3306
+
+  confusion:
+    image: confusion:latest
+    ports:
+      - 8086:8086
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql-standalone
